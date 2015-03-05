@@ -2,12 +2,11 @@ function Round() {
     this.apiURL = "https://blastermind.herokuapp.com";
 }
 
-Round.prototype.registerPlayer = function () {
+Round.prototype.registerPlayer = function() {
     alert("Boom! Registered.")
 }
 
-Round.prototype.startRound = function () {
-//    debugger;
+Round.prototype.startRound = function() {
     var that = this;
     $(".new-game").on("click", function(event) {
         event.preventDefault();
@@ -15,7 +14,7 @@ Round.prototype.startRound = function () {
     });
 };
 
-(function () {
+(function() {
     var round = new Round();
     round.startRound()
 })();
