@@ -3,7 +3,7 @@
     // match manger
     // idle mode
     // match making
-    // player manager
+    this.round = new Round().connect();
     this.playerCount = 4
   }
 
@@ -11,8 +11,22 @@
    alert('Loaded!')
   }
 
-  spectator_manager = new SpectatorManager
-  spectator_manager.setup
+  spectator_manager = new SpectatorManager().setup();
+
+  function Round (){
+    this.state = 'idle'
+  }
+
+  Round.prototype.connect = function(){
+   var pusher = new Pusher('key12355555', {
+     authTransport: 'jsonp',
+     authEndpoint: 'http://mysterious-forest-1231323232323232323232323.herokuapp.com/pusher/auth'
+   }); 
+
+   var channel = socket.subscribe('match') 
+   
+  }
+
 })();
 
 
