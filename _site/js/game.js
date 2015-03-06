@@ -3,7 +3,7 @@
   // API
 
   function Server(){
-    this.pusher = new Pusher('a8dc613841aa8963a8a4', { authTransport: 'jsonp' });
+    //this.pusher = new Pusher('a8dc613841aa8963a8a4', { authTransport: 'jsonp' });
     this.api = "https://blastermind.herokuapp.com";
   };
 
@@ -82,26 +82,39 @@
   // PLAY
   //getMatch(server, game);
 
-  var findMatches = function(server, game){
+  var findMatches = function(server){
     var matchesEndpoint = server.api + "/matches";
+    var matchesResponse = {};
     var matches = $.get(matchesEndpoint, function(){});
 
     matches.done(function(data){
-      var matchesObject = JSON.parse(data);
+      matchesResponse = JSON.parse(data);
     });
+    console.log(matchesResponse);
+    return matchesResponse;
+  };
+
+  var formatMatchesResponse = function(apiMatches){
+    var matchesResponse = ""
+    if (apiMatches.length > 0) {
+      for (i=0; i<apiMatches.length; i++) {
+        console.log(apiMatches[i]);
+      };
+    } else {
+      var matchesResponse = "<div>No matches found! Reload the page to check again.</div>"
+    };
+    return matchesResponse;
   };
 
   var updateView = function(selector, data) {
     $(selector).html(data);
   };
 
-  var server = new Server();
-  var game = new Game();
-
-  var start = function() {
-    var matches = findMatches(server, game);
-    updateView(".matches-grid", "<div>Hi</div>");
-  }
-
-  $(document).ready(function(){ start() });
+  $(document).ready(function(){
+    var server = new Server();
+    var apiMatches = findMatches(server);
+    console.log(apiMatches);
+    var matchesResponse = formatMatchesResponse(apiMatches);
+    updateView(".matches-grid", matchesResponse);
+  });
 })();
