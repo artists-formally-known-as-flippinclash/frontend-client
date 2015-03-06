@@ -17,9 +17,11 @@
   display: none;
 }
 
-.trigger {
+.instructor {
   background: #87DDB8;
   padding: 1em 0 1em 0;
+  height: 1.5em;
+  text-align: center;
 }
 
 .matches-grid {
@@ -33,4 +35,8 @@
   margin-right: auto;
   margin-top: 1em;
   padding: 1em;
+}
+
+.viewing {
+  font-size: 2em;
 }
