@@ -92,10 +92,12 @@
 
   var formatMatchesResponse = function(apiMatches){
     var matchesResponse = ""
-    console.log(apiMatches)
     if (apiMatches.length > 0) {
-      for (i=0; i<apiMatches.length; i++) {
-        var matchesResponse = matchesResponse + "<div>"
+      for (i=apiMatches.length-1; i>0; i--) {
+        var matchId = apiMatches[i].id.toString();
+        if (apiMatches[i].state == "in_progress") {
+          var matchesResponse = matchesResponse + "<div class=match-button " + matchId + "\">" + "Match " + matchId +"</div>"
+        }
       };
     } else {
       var matchesResponse = "<div>No matches found! Reload the page to check again.</div>"
@@ -110,8 +112,7 @@
   $(document).ready(function(){
     var server = new Server();
     findMatches(server, function (apiMatches) {
-      console.log(apiMatches);
-      var matchesResponse = formatMatchesResponse(apiMatches);
+      var matchesResponse = formatMatchesResponse(apiMatches.data);
       updateView(".matches-grid", matchesResponse);
     });
   });
