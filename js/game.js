@@ -13,7 +13,6 @@
   var getMatch = function(server, game){
     var matchesEndpoint = server.api + "/matches";
     var matches = $.get(matchesEndpoint, function(){});
-
     matches.done(function(data){
       var matchesObject = JSON.parse(data);
       //var matchResult = paresLastMatch(matchesObject);
@@ -82,23 +81,21 @@
   // PLAY
   //getMatch(server, game);
 
-  var findMatches = function(server){
+  var findMatches = function(server, callback){
     var matchesEndpoint = server.api + "/matches";
-    var matchesResponse = {};
     var matches = $.get(matchesEndpoint, function(){});
-
     matches.done(function(data){
-      matchesResponse = JSON.parse(data);
+      var returnResponse = JSON.parse(data);
+      callback(returnResponse);
     });
-    console.log(matchesResponse);
-    return matchesResponse;
   };
 
   var formatMatchesResponse = function(apiMatches){
     var matchesResponse = ""
+    console.log(apiMatches)
     if (apiMatches.length > 0) {
       for (i=0; i<apiMatches.length; i++) {
-        console.log(apiMatches[i]);
+        var matchesResponse = matchesResponse + "<div>"
       };
     } else {
       var matchesResponse = "<div>No matches found! Reload the page to check again.</div>"
@@ -112,9 +109,10 @@
 
   $(document).ready(function(){
     var server = new Server();
-    var apiMatches = findMatches(server);
-    console.log(apiMatches);
-    var matchesResponse = formatMatchesResponse(apiMatches);
-    updateView(".matches-grid", matchesResponse);
+    findMatches(server, function (apiMatches) {
+      console.log(apiMatches);
+      var matchesResponse = formatMatchesResponse(apiMatches);
+      updateView(".matches-grid", matchesResponse);
+    });
   });
 })();
