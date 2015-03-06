@@ -33,11 +33,11 @@
 
     for (i=0; i<playersList.length; i++){
       var player = playersList[i];
-      players.push(new Player(player.id, player.name))
+      players.push(new Player(player.id, player.name));
     };
 
     return players
-  }
+  };
 
   var parseLastMatch = function(matches) {
     return matches.data[matches.data.length-1];
@@ -47,7 +47,7 @@
   function Player(id, name){
     this.id = id;
     this.name = name;
-  }
+  };
 
   // MATCHES
 
@@ -76,12 +76,32 @@
   };
 
   Game.prototype.setPlayers = function(players) {
-    this.players = players
-  }
+    this.players = players;
+  };
 
   // PLAY
+  //getMatch(server, game);
+
+  var findMatches = function(server, game){
+    var matchesEndpoint = server.api + "/matches";
+    var matches = $.get(matchesEndpoint, function(){});
+
+    matches.done(function(data){
+      var matchesObject = JSON.parse(data);
+    });
+  };
+
+  var updateView = function(selector, data) {
+    $(selector).html(data);
+  };
 
   var server = new Server();
   var game = new Game();
-  getMatch(server, game)
+
+  var start = function() {
+    var matches = findMatches(server, game);
+    updateView(".matches-grid", "<div>Hi</div>");
+  }
+
+  $(document).ready(function(){ start() });
 })();
