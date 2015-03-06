@@ -1,9 +1,7 @@
 * {
-  // outline: 1px solid grey;
-}
-
-h1, h2 {
   text-align: center;
+  font-family: 'Quicksand', sans-serif;
+  // outline: 1px solid grey;
 }
 
 .board {
@@ -17,4 +15,9 @@ h1, h2 {
 
 .outcome {
   display: none;
+}
+
+.trigger {
+  background: #87DDB8;
+  padding: 1em 0 1em 0;
 }
