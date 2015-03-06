@@ -13,4 +13,3 @@ EventListener.prototype.newGame = function(){
     alert('match-ended!')
   })
 }
-
