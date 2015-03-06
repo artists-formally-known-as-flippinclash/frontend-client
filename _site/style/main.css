@@ -1,0 +1,20 @@
+* {
+  // outline: 1px solid grey;
+}
+
+h1, h2 {
+  text-align: center;
+}
+
+.board {
+  padding: 5em 20em 5em 20em;
+}
+
+.control-panel {
+  outline: 1px solid gray;
+  background: grey;
+}
+
+.outcome {
+  display: none;
+}
