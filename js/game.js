@@ -41,6 +41,7 @@
     this.match = "";
     this.players = "";
     this.channel = "";
+    this.winner = "";
   };
 
   // API
@@ -136,14 +137,20 @@
   var eventMatchEnded = function(game, pusher){
     game.channel.bind('match-ended', function(data){
       console.log('Pusher binded to event: match-ended!');
-      var winnerName = data.data.winner.name;
-      $('.headline').text(winnerName + " is the Winner!");
+      var winner = data.data.winner;
+      var player = game.getPlayerById(winner.id)
+      game.hasWinner(winner);
+      $('.headline').text(winner.name + " is the Winner!");
       $('.headline').addClass(yellow);
 
       var channelName = game.match.channelName;
       pusher.unsubscribe(channelName);
     });
   };
+
+  Game.prototype.hasWinner = function(winner){
+    this.winner = winner;
+  }
 
   var eventMatchProgress = function(game) {
     game.channel.bind('match-progress', function(data){
@@ -158,6 +165,12 @@
       var pusherPlayer = data.data.players[a];
       var player = game.getPlayerById(pusherPlayer.id);
       player.updateGuesses(pusherPlayer.guesses);
+
+      // if player has 10 guesses but did not guess correctly (no winner determined)
+      if (game.winner != "" && player.guesses.length >= 10) {
+        playerFinished(game, player);
+      }
+
       var playerGrid =".player-grid-" + a.toString();
       //iterate over player's guesses
       //find guess div
@@ -176,6 +189,10 @@
         };
       };
     };
+  };
+
+  var playerFinished = function(player, guess) {
+
   };
 
   var combineFeedback = function(guess){

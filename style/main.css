@@ -10,13 +10,12 @@
 .yellow { background: yellow; }
 
 /* Types */
-.alpha { background: lightblue; }
-.beta { background: black;}
+.alpha { background: pink; }
+.beta { background: orange; }
 .gamma { background: yellow; }
-.delta { background: pink; }
-.epsilon { background: purple; }
-.zeta { background: orange; }
-
+.delta { background: palegreen; }
+.epsilon { background: lightblue; }
+.zeta { background: purple; }
 
 
 li {
