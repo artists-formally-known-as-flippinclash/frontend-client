@@ -125,7 +125,8 @@
   // STATE 3: MATCH VIEWING ////////////////////////////////////////////////////
 
   var eventMatchEnded = function(game){
-    game.channel.bind('match-ended', function(){
+    game.channel.bind('match-ended', function(data){
+      console.log(data);
       console.log('Pusher binded to event: match-ended!');
     });
   };
@@ -137,8 +138,11 @@
   };
 
   var eventMatchProgress = function(game) {
-    game.channel.bind('match-progress', function(){
-      console.log('Pusher binded to event: match-progress');
+    game.channel.bind('match-progress', function(data){
+      console.log(data);
+      var playerGuesses = data.data.players[0].guesses
+      var last_player = playerGuesses[playerGuesses.length-1]
+      debugger;
     });
   };
 
