@@ -66,7 +66,7 @@
       loadPlayers(match, game);
 
       listenToEvents(game, pusher);
-      updateBoards(game
+      updateBoards(game);
     });
   };
 
@@ -155,20 +155,17 @@
 
   var eventMatchProgress = function(game) {
     game.channel.bind('match-progress', function(data){
-      console.log(data);
-
+      //iterate over players
       for (a=0; a<data.data.players.length; a++){
-        //iterate over players
-        //load all guesses to player obje
         var pusherPlayer = data.data.players[a];
         var player = game.getPlayerById(pusherPlayer.id);
         player.updateGuesses(pusherPlayer.guesses);
+        var playerGrid =".player-grid-" + a.toString()
 
         //iterate over player's guesses
         //find guess div
-        for (g=0; g<10; g++){
-          var playedGuess = player.guesses[g];
-          var playerGrid =".player-grid-" + g.toString();
+        for (g=0; g<player.guesses.length; g++){
+          var playedGuess = player.guesses[g];;
           var guessNo = ".guess-" + g.toString();
 
           //iterate over player guesses code-pegs
@@ -177,9 +174,7 @@
             var playedCodePeg = playedGuess.code_pegs[p];
             var codePeg = ".code-peg-" + p.toString();
             var codePegView = $(playerGrid).find(guessNo).find(codePeg);
-
-            var playedGuessColor = "." + playedCodePeg;
-            $(codePegView).addClass(playedGuessColor);
+            $(codePegView).addClass(playedCodePeg);
           };
         };
       };
