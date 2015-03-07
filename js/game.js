@@ -65,6 +65,8 @@
       loadPlayers(match, game);
 
       listenToEvents(game, pusher);
+
+      updateBoards(game);
     });
   };
 
@@ -80,7 +82,7 @@
       var player = playersList[i];
       players.push(new Player(player.id, player.name));
     };
-    game.setPlayers = players;
+    game.setPlayers(players);
   };
 
   function Player(id, name){
@@ -123,7 +125,8 @@
   // STATE 3: MATCH VIEWING ////////////////////////////////////////////////////
 
   var eventMatchEnded = function(game){
-    game.channel.bind('match-ended', function(){
+    game.channel.bind('match-ended', function(data){
+      console.log(data);
       console.log('Pusher binded to event: match-ended!');
     });
   };
@@ -135,14 +138,34 @@
   };
 
   var eventMatchProgress = function(game) {
-    game.channel.bind('match-progress', function(){
-      console.log('Pusher binded to event: match-progress');
+    game.channel.bind('match-progress', function(data){
+      console.log(data);
+      var playerGuesses = data.data.players[0].guesses
+      var last_player = playerGuesses[playerGuesses.length-1]
+      debugger;
     });
   };
 
+  var updateBoards = function(game) {
+    var players = game.players
+    $(".matches-grid").hide();
+    $(".matches-boards").show();
+  }
+
   //////////////////////////////////////////////////////////////////////////////
 
-
+  var template = function() {
+    var board = "<div class='player-window'>" +
+                  "<ul>" +
+                    "<li>" +
+                      "<div>" +
+                        "HI"
+                      "<div>" +
+                    "<li>" +
+                  "</ul>" +
+                "</div>"
+    return board
+  }
 
 
   // ON PAGE LOAD /////////////////////////////////////////////////////////////
