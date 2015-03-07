@@ -128,58 +128,92 @@
       pusher.unsubscribe(channelName);
     });
 
-    eventMatchStarted(game);
-    eventMatchEnded(game);
     eventMatchProgress(game);
+    eventMatchEnded(game, pusher);
   }
 
   // STATE 3: MATCH VIEWING ////////////////////////////////////////////////////
 
-  var eventMatchEnded = function(game){
+  var eventMatchEnded = function(game, pusher){
     game.channel.bind('match-ended', function(data){
       console.log('Pusher binded to event: match-ended!');
       var winnerName = data.data.winner.name;
-      $('.outcome h2').text(winnterName + " is the Winner!");
+      $('.headline').text(winnerName + " is the Winner!");
+      $('.headline').addClass(yellow);
 
-      var playerGrid = ".player-grid-" + data.data.winner.id.toString();
-      $(playerGrid).css('background', 'pink');
-    });
-  };
-
-  var eventMatchStarted = function(game) {
-    game.channel.bind('match-started', function(){
-      console.log(data);
-      console.log('Pusher binded to event: match-started');
+      var channelName = game.match.channelName;
+      pusher.unsubscribe(channelName);
     });
   };
 
   var eventMatchProgress = function(game) {
     game.channel.bind('match-progress', function(data){
-      //iterate over players
-      for (a=0; a<data.data.players.length; a++){
-        var pusherPlayer = data.data.players[a];
-        var player = game.getPlayerById(pusherPlayer.id);
-        player.updateGuesses(pusherPlayer.guesses);
-        var playerGrid =".player-grid-" + a.toString();
-
-        //iterate over player's guesses
-        //find guess div
-        for (g=0; g<player.guesses.length; g++){
-          var playedGuess = player.guesses[g];
-          var guessNo = ".guess-" + g.toString();
-
-          //iterate over player guesses code-pegs
-          //find code peg div
-          for (p=0; p<4; p++){
-            var playedCodePeg = playedGuess.code_pegs[p];
-            var codePeg = ".code-peg-" + p.toString();
-            var codePegView = $(playerGrid).find(guessNo).find(codePeg);
-            $(codePegView).addClass(playedCodePeg);
-          };
-        };
-      };
+      updatePlayerGuessCodePegs(game, data);
+      updatePlayerGuessFeedback(game, data);
     });
   };
+
+  var updatePlayerGuessFeedback = function(game, data){
+    //iterate over players
+    for (a=0; a<data.data.players.length; a++){
+      var pusherPlayer = data.data.players[a];
+      var player = game.getPlayerById(pusherPlayer.id);
+      player.updateGuesses(pusherPlayer.guesses);
+      var playerGrid =".player-grid-" + a.toString();
+      //iterate over player's guesses
+      //find guess div
+      for (g=0; g<player.guesses.length; g++){
+        var playedGuess = player.guesses[g];
+        var guessNo = ".guess-" + g.toString();
+        var feedback = combineFeedback(playedGuess);
+
+        //iterate over available key-peg slots
+        //update view
+        for (k=0;k<4;k++){
+          var keyPeg = ".key-peg-" + k.toString();
+          var keyPegView = $(playerGrid).find(guessNo).find(keyPeg);
+          var feedbackColor = feedback[k];
+          $(keyPegView).addClass(feedbackColor);
+        };
+      };
+    };
+  };
+
+  var combineFeedback = function(guess){
+    var orderedFeedbackPegs = [];
+    var pegCount = guess.feedback.peg_count;
+    var positionCount = guess.feedback.position_count;
+
+    for (i=0;i<pegCount; i++){ orderedFeedbackPegs.push("grey"); };
+    for (i=0;i<positionCount;i++){ orderedFeedbackPegs.push("red"); };
+    return orderedFeedbackPegs;
+  };
+
+  var updatePlayerGuessCodePegs = function(game, data) {
+    //iterate over players
+    for (a=0; a<data.data.players.length; a++){
+      var pusherPlayer = data.data.players[a];
+      var player = game.getPlayerById(pusherPlayer.id);
+      player.updateGuesses(pusherPlayer.guesses);
+      var playerGrid =".player-grid-" + a.toString();
+
+      //iterate over player's guesses
+      //find guess div
+      for (g=0; g<player.guesses.length; g++){
+        var playedGuess = player.guesses[g];
+        var guessNo = ".guess-" + g.toString();
+
+        //iterate over player guesses code-pegs
+        //find code peg div
+        for (p=0; p<4; p++){
+          var playedCodePeg = playedGuess.code_pegs[p];
+          var codePeg = ".code-peg-" + p.toString();
+          var codePegView = $(playerGrid).find(guessNo).find(codePeg);
+          $(codePegView).addClass(playedCodePeg);
+        };
+      };
+    };
+  }
 
   Player.prototype.updateGuesses = function(guesses){
     this.guesses = guesses;
