@@ -148,13 +148,8 @@
 
   var updateBoards = function(game) {
     var players = game.players
-    var board = ""
-
-    for (i=0; i<players.length; i++){
-      board = board + template();
-    }
-
-    $('.matches-grid').html(board)
+    $(".matches-grid").hide();
+    $(".matches-boards").show();
   }
 
   //////////////////////////////////////////////////////////////////////////////
