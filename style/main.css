@@ -42,7 +42,6 @@ li {
   justify-content: center;
   padding: 10px;
   width: 98%;
-  min-height: 20px;
 }
 .player-grid {
   flex: 1;
@@ -60,30 +59,42 @@ li {
 
 /* Guess */
 .guesses {
-  flex: auto;
   display: flex;
-  align-items: center;
   justify-content: center;
-  padding-top: 2em;
+  padding-top: 1em;
+  flex-wrap: wrap;
 }
 
 .guess {
   flex: none;
   display: flex;
+  padding: 0.5em 0 0.5em 0;
+  border-top: 1px dotted grey;
+}
+
+.guess-input {
+  flex: none;
+  display: flex;
+  padding: 0.5em 0 0.5em 0;
+  border: none;
 }
 
 /* Feedback */
 
 .feedback {
   display: flex;
-  padding: 0.5em 0 0 0;
+  padding: 0.3em 0 0 0;
 }
 
 .key-peg {
   border: 1px dotted grey;
-  width: 14px;
-  height: 14px;
+  width: 16px;
+  height: 10px;
   margin: 2px;
+}
+
+.key-peg-input {
+  border: none;
 }
 
 
@@ -98,9 +109,24 @@ li {
 }
 
 .code-peg {
+  border: 1px dotted grey;
+  height: 1em;
+  width: 1em;
+  margin: 0 0.5em 0 0.5em;
+}
+
+.code-first {
+  display: flex;
+  flex: auto;
+  width: 100%;
+  padding-left: 1.5em;
+  align-items: baseline;
+}
+
+.code-peg-input  {
   border: 1px solid grey;
-  height: 2em;
-  width: 2em;
+  height: 1.25em;
+  width: 1.25em;
   margin: 0 0.5em 0 0.5em;
 }
 
