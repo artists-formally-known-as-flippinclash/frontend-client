@@ -1,12 +1,7 @@
 (function(){
 
-  // API
-  function Server(){
-    //this.pusher = new Pusher('a8dc613841aa8963a8a4', { authTransport: 'jsonp' });
-    this.api = "https://blastermind.herokuapp.com";
-  };
+  // STATE 1: MATCH LOADING ////////////////////////////////////////////////////
 
-  // STATE 1: Listing In-Progress Matches;
   var findMatches = function(server, callback){
     var matchesEndpoint = server.api + "/matches";
     var matches = $.get(matchesEndpoint, function(){});
@@ -36,63 +31,69 @@
   };
 
   // PARSING
-  var parsePlayers = function(match) {
-    var playersList = match.players;
-    var players = [];
-
-    for (i=0; i<playersList.length; i++){
-      var player = playersList[i];
-      players.push(new Player(player.id, player.name));
-    };
-
-    return players
-  };
 
   var parseLastMatch = function(matches) {
     return matches.data[matches.data.length-1];
   };
 
-  var listenForMatchSelection = function(game) {
+  // Game
+  function Game(){
+    this.match = "";
+    this.players = "";
+    this.channel = "";
+  };
+
+  // API
+  function Server(){
+    this.api = "https://blastermind.herokuapp.com";
+  };
+
+
+
+  // STATE 2: MATCH SELECTION /////////////////////////////////////////////////
+
+  var listenForMatchSelection = function(game, pusher) {
     $(".matches-grid").on( "click", ".match-button", function(){
       var matchNo = $(this).attr('rel');
       var matchIdInt = parseInt(matchNo);
-      var match = availabileMatches[matchIdInt-1]
+      var match = availabileMatches[matchIdInt-1];
 
-      $('.headline').text("Match "+matchNo)
-      $('.headline').addClass("viewing")
+      $('.headline').text("Match "+matchNo);
+      $('.headline').addClass("viewing");
+
+      loadMatch(match, game);
+      loadPlayers(match, game);
+
+      listenToEvents(game, pusher);
     });
   };
 
-  // STATE 2: LOAD MATCH
-
-  var showMatch = function() {
+  var loadMatch = function(unparsedMatch, game){
+    var matchObj = new Match(unparsedMatch.id, unparsedMatch.channel);
+    game.setMatch(matchObj);
   }
 
-  // PLAYERS
+  var loadPlayers = function(match, game) {
+    var playersList = match.players;
+    var players = [];
+    for (i=0; i<playersList.length; i++){
+      var player = playersList[i];
+      players.push(new Player(player.id, player.name));
+    };
+    game.setPlayers = players;
+  };
+
   function Player(id, name){
     this.id = id;
     this.name = name;
   };
 
-  // MATCHES
-  function Match(response){
-    this.response = response;
+  function Match(id, channel){
     this.id = "";
-    this.channel = "";
-    this.setup();
+    this.channelName = channel;
+    this.state = "In-Progress";
   };
 
-  Match.prototype.setup = function() {
-    this.id = this.response.id;
-    this.channel = this.response.channel;
-  }
-
-
-  // GAME
-  function Game(){
-    this.match = "";
-    this.players = "";
-  };
 
   Game.prototype.setMatch = function(match) {
     this.match = match;
@@ -102,12 +103,57 @@
     this.players = players;
   };
 
+  Game.prototype.setChannel = function(channel) {
+    this.channel = channel;
+  };
 
-  // ON PAGE LOAD
+  var listenToEvents = function(game, pusher) {
+    var channelName = game.match.channelName;
+    game.setChannel(pusher.subscribe(channelName));
+    console.log('Pusher subscribed to channel ' + channelName);
+    $(window).on('beforeunload', function(){
+      pusher.unsubscribe(channelName);
+    });
+
+    eventMatchStarted(game);
+    eventMatchEnded(game);
+    eventMatchProgress(game);
+  }
+
+  // STATE 3: MATCH VIEWING ////////////////////////////////////////////////////
+
+  var eventMatchEnded = function(game){
+    game.channel.bind('match-ended', function(){
+      console.log('Pusher binded to event: match-ended!');
+    });
+  };
+
+  var eventMatchStarted = function(game) {
+    game.channel.bind('match-started', function(){
+      console.log('Pusher binded to event: match-started');
+    });
+  };
+
+  var eventMatchProgress = function(game) {
+    game.channel.bind('match-progress', function(){
+      console.log('Pusher binded to event: match-progress');
+    };
+  };
+
+  //////////////////////////////////////////////////////////////////////////////
+
+
+
+
+  // ON PAGE LOAD /////////////////////////////////////////////////////////////
 
   $(document).ready(function(){
+
+    // State 1
     var server = new Server();
     var game = new Game();
+    var pusher = new Pusher('a8dc613841aa8963a8a4', { authTransport: 'jsonp' });
+
     availabileMatches = "";
 
     findMatches(server, function (apiMatches) {
@@ -116,6 +162,7 @@
       updateView(".matches-grid", matchesResponse);
     });
 
-    listenForMatchSelection(game);
+    // State 2 & 3
+    listenForMatchSelection(game, pusher);
   });
 })();
