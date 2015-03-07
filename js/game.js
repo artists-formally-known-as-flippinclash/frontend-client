@@ -66,8 +66,8 @@
       loadPlayers(match, game);
 
       listenToEvents(game, pusher);
-
       updateBoards(game);
+      debugger;
     });
   };
 
@@ -89,6 +89,7 @@
   function Player(id, name){
     this.id = id;
     this.name = name;
+    this.guesses = [];
   };
 
   function Match(id, channel){
@@ -105,6 +106,16 @@
   Game.prototype.setPlayers = function(players) {
     this.players = players;
   };
+
+  Game.prototype.getPlayerById = function(id) {
+    var player = "";
+    for (i=0; i<this.players.length; i++){
+      if (this.players[i].id == id) {
+        player = this.players[i];
+      }
+    }
+    return player;
+  }
 
   Game.prototype.setChannel = function(channel) {
     this.channel = channel;
@@ -127,8 +138,12 @@
 
   var eventMatchEnded = function(game){
     game.channel.bind('match-ended', function(data){
-      console.log(data);
       console.log('Pusher binded to event: match-ended!');
+      var winnerName = data.data.winner.name;
+      $('.outcome h2').text(winnterName + " is the Winner!");
+
+      var playerGrid = ".player-grid-" + data.data.winner.id.toString();
+      $(playerGrid).css('background', 'pink');
     });
   };
 
@@ -142,13 +157,40 @@
   var eventMatchProgress = function(game) {
     game.channel.bind('match-progress', function(data){
       console.log(data);
-      var playerGuesses = data.data.players[0].guesses
-      var last_player = playerGuesses[playerGuesses.length-1]
+
+      for (a=0; a<data.data.players.length; a++){
+        //iterate over players
+        //load all guesses to player object
+        var pusherPlayer = data.data.players[a]
+        var player = game.getPlayerById(pusherPlayer.id);
+        player.updateGuesses(pusherPlayer.guesses);
+
+        //iterate over player's guesses
+        //find guess div
+        for (i=0; i<10; i++){
+          var playerGuess = player.guesses[i];
+          var playerGrid =".player-grid-" + i.toString();
+          var guessNo = ".guess-" + i.toString();
+
+          //iterate over player guesses code-pegs
+          //find code peg div
+          for (r=0; r<4; r++){
+            var code-peg = ".code-peg-" + r.toString
+            $(playerGrid).find(guessNo).find(codePeg);
+
+          }
+
+        }
+      }
     });
   };
 
+  Player.prototype.updateGuesses = function(guesses){
+    this.guesses = guesses;
+  }
+
   var updateBoards = function(game) {
-    var players = game.players
+    var players = game.players;
 
     for (i=0; i<players.length; i++){
       var player = players[i];
