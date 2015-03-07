@@ -175,7 +175,7 @@
           //iterate over player guesses code-pegs
           //find code peg div
           for (r=0; r<4; r++){
-            var code-peg = ".code-peg-" + r.toString
+            var codePeg = ".code-peg-" + r.toString();
             $(playerGrid).find(guessNo).find(codePeg);
 
           }
