@@ -160,13 +160,11 @@
 
   var eventMatchProgress = function(game) {
     game.channel.bind('match-progress', function(data){
-      debugger;
       if (game.match.firstLoad == true) {
         updatePlayerGuessCodePegs(game, data);
         updatePlayerGuessFeedback(game, data);
         game.match.firstLoadDone();
       } else {
-        debugger;
         updateNextGuess(game, data);
       };
     });
@@ -202,7 +200,6 @@
         var keyPegView = guessSelector.find(keyPeg);
         var feedbackColor = feedback[k];
         $(keyPegView).addClass(feedbackColor);
-        debugger;
       };
 
       //iterate over code-peg slots
@@ -212,7 +209,6 @@
         var codePeg = ".code-peg-" + p.toString();
         var codePegView = guessSelector.find(codePeg);
         $(codePegView).addClass(playedCodePeg);
-        debugger;
       };
     };
   };
@@ -234,12 +230,11 @@
       var playerGrid =".player-grid-" + a.toString();
       //iterate over player's guesses
       //find guess div
-      for (g=player.guesses.length; g<0; g--){
+      for (g=player.guesses.length-1; g>-1; g--){
         var playedGuess = player.guesses[g];
-        var guessNo = ".guess-" + g.toString();
+        var guessNo = ".guess-" + (g+1).toString();
         var feedback = combineFeedback(playedGuess);
 
-        debugger;
         //iterate over available key-peg slots
         //update view
         for (k=0;k<4;k++){
@@ -249,7 +244,7 @@
 
           $(keyPegView).removeClass("red" ).removeClass("grey")
           $(keyPegView).addClass(feedbackColor);
-          debugger;
+
         };
       };
     };
@@ -272,8 +267,7 @@
   };
 
   var updatePlayerGuessCodePegs = function(game, data) {
-    //iterate over players
-    debugger;
+    //iterate over player
     for (a=0; a<data.data.players.length; a++){
       var pusherPlayer = data.data.players[a];
       var player = game.getPlayerById(pusherPlayer.id);
@@ -282,10 +276,8 @@
 
       //iterate over player's guesses
       //find guess div
-      debugger;
       for (g=player.guesses.length-1; g>-1; g--){
         var playedGuess = player.guesses[g];
-        debugger;
         var guessNo = ".guess-" + g.toString();
 
         //iterate over player guesses code-pegs
@@ -295,7 +287,6 @@
           var codePeg = ".code-peg-" + p.toString();
           var codePegView = $(playerGrid).find(guessNo).find(codePeg);
           $(codePegView).addClass(playedCodePeg);
-          debugger;
         };
       };
     };
