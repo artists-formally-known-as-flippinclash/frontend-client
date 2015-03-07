@@ -4,6 +4,21 @@
   //outline: 1px solid grey;
 }
 
+/* Colors */
+.red { background: red; }
+.grey { background: grey;}
+.white { background: white; }
+
+/* Types */
+.alpha { background: lightblue; }
+.beta { background: black;}
+.gamma { background: yellow; }
+.delta { background: pink; }
+.epsilon { background: purple; }
+.zeta { background: orange; }
+
+
+
 li {
   list-style-type: none;
 }
@@ -147,19 +162,5 @@ li {
   width: 1.25em;
   margin: 0 0.5em 0 0.5em;
 }
-
-
-/* Colors */
-.red { background: red; }
-.grey { background: grey;}
-.white { background: white; }
-
-/* Types */
-.alpha { background: lightblue; }
-.beta { background: black;}
-.gamma { background: yellow; }
-.delta { background: pink; }
-.epsilon { background: purple; }
-.zeta { background: orange; }
 
 
