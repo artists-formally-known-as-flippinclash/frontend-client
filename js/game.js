@@ -15,10 +15,9 @@
     var matchesResponse = ""
     if (apiMatches.length > 0) {
       for (i=apiMatches.length-1; i>-1; i--) {
-        var matchId = apiMatches[i].id.toString();
         if (apiMatches[i].state == "in_progress") {
-          var matchesResponse = matchesResponse + "<div class=match-button rel=" + matchId + ">" + apiMatches[i].name +"</div>"
-        }
+          var matchesResponse = matchesResponse + "<div class=match-button rel=" + i.toString() + ">" + apiMatches[i].name +"</div>"
+        };
       };
     } else {
       var matchesResponse = "<div>No matches found! Reload the page to check again.</div>"
@@ -56,8 +55,7 @@
     $(".matches-grid").on( "click", ".match-button", function(){
       var matchNo = $(this).attr('rel');
       var matchIdInt = parseInt(matchNo);
-      var match = availabileMatches[matchIdInt-1];
-
+      var match = availabileMatches[matchIdInt];
       $('.headline').text("Match "+ match.name);
       $('.headline').addClass("viewing");
 
@@ -327,7 +325,7 @@
     var game = new Game();
     var pusher = new Pusher('a8dc613841aa8963a8a4', { authTransport: 'jsonp' });
 
-    availabileMatches = "";
+    function availableMatches() { availableMatches = "Volvo"; };
 
     findMatches(server, function (apiMatches) {
       availabileMatches = apiMatches.data
