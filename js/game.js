@@ -14,8 +14,7 @@
   var formatMatchesResponse = function(apiMatches){
     var matchesResponse = ""
     if (apiMatches.length > 0) {
-      var limit = apiMatches.length - 10
-      for (i=apiMatches.length-1; i>limit; i--) {
+      for (i=apiMatches.length-1; i>-1; i--) {
         var matchId = apiMatches[i].id.toString();
         if (apiMatches[i].state == "in_progress") {
           var matchesResponse = matchesResponse + "<div class=match-button rel=" + matchId + ">" + apiMatches[i].name +"</div>"
@@ -160,11 +159,14 @@
 
   var eventMatchProgress = function(game) {
     game.channel.bind('match-progress', function(data){
+      debugger;
+
       if (game.match.firstLoad == true) {
         updatePlayerGuessCodePegs(game, data);
         updatePlayerGuessFeedback(game, data);
         game.match.firstLoadDone();
       } else {
+        debugger;
         updateNextGuess(game, data);
       };
     });
@@ -231,7 +233,6 @@
       for (g=0; g<player.guesses.length; g++){
         var playedGuess = player.guesses[g];
         var guessNo = ".guess-" + (g).toString();
-        debugger;
         var feedback = combineFeedback(playedGuess);
 
         //iterate over available key-peg slots
