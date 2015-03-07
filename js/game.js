@@ -40,6 +40,7 @@
   function Game(){
     this.match = "";
     this.players = "";
+    this.channel = "";
   };
 
   // API
@@ -102,20 +103,52 @@
     this.players = players;
   };
 
+  Game.prototype.setChannel = function(channel) {
+    this.channel = channel;
+  };
+
   var listenToEvents = function(game, pusher) {
     var channelName = game.match.channelName;
-    debugger;
+    game.setChannel(pusher.subscribe(channelName));
+    console.log('Pusher subscribed to channel ' + channelName);
+    $(window).on('beforeunload', function(){
+      pusher.unsubscribe(channelName);
+    });
 
+    eventMatchStarted(game);
+    eventMatchEnded(game);
+    eventMatchProgress(game);
   }
 
   // STATE 3: MATCH VIEWING ////////////////////////////////////////////////////
 
+  var eventMatchEnded = function(game){
+    game.channel.bind('match-ended', function(){
+      console.log('Pusher binded to event: match-ended!');
+    });
+  };
+
+  var eventMatchStarted = function(game) {
+    game.channel.bind('match-started', function(){
+      console.log('Pusher binded to event: match-started');
+    });
+  };
+
+  var eventMatchProgress = function(game) {
+    game.channel.bind('match-progress', function(){
+      console.log('Pusher binded to event: match-progress');
+    };
+  };
+
   //////////////////////////////////////////////////////////////////////////////
+
+
 
 
   // ON PAGE LOAD /////////////////////////////////////////////////////////////
 
   $(document).ready(function(){
+
     // State 1
     var server = new Server();
     var game = new Game();
@@ -129,10 +162,7 @@
       updateView(".matches-grid", matchesResponse);
     });
 
-    // State 2
+    // State 2 & 3
     listenForMatchSelection(game, pusher);
-
-
-    // State 3
   });
 })();
