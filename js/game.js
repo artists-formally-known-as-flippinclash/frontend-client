@@ -14,10 +14,11 @@
   var formatMatchesResponse = function(apiMatches){
     var matchesResponse = ""
     if (apiMatches.length > 0) {
-      for (i=apiMatches.length-1; i>0; i--) {
+      var limit = apiMatches.length - 10
+      for (i=apiMatches.length-1; i>limit; i--) {
         var matchId = apiMatches[i].id.toString();
         if (apiMatches[i].state == "in_progress") {
-          var matchesResponse = matchesResponse + "<div class=match-button rel=" + matchId + ">" + "Match " + matchId +"</div>"
+          var matchesResponse = matchesResponse + "<div class=match-button rel=" + matchId + ">" + "Match " + apiMatches[i].name +"</div>"
         }
       };
     } else {
@@ -58,7 +59,7 @@
       var matchIdInt = parseInt(matchNo);
       var match = availabileMatches[matchIdInt-1];
 
-      $('.headline').text("Match "+matchNo);
+      $('.headline').text("Match "+ match.name);
       $('.headline').addClass("viewing");
 
       loadMatch(match, game);
