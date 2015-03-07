@@ -187,7 +187,7 @@
     findMatches(server, function (apiMatches) {
       availabileMatches = apiMatches.data
       var matchesResponse = formatMatchesResponse(apiMatches.data);
-      //updateView(".matches-grid", matchesResponse);
+      updateView(".matches-grid", matchesResponse);
     });
 
     // State 2 & 3

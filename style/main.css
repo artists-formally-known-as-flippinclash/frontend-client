@@ -37,8 +37,9 @@ li {
   padding: 1em;
 }
 
-.boards {
-  display: flex;
+.matches-boards {
+  display: none;
+  //display: flex;
   justify-content: center;
   padding: 10px;
   width: 98%;
