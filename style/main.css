@@ -1,11 +1,11 @@
 * {
   text-align: center;
   font-family: 'Quicksand', sans-serif;
-  // outline: 1px solid grey;
+  outline: 1px solid grey;
 }
 
-.board {
-  padding: 5em 20em 5em 20em;
+li {
+  list-style-type: none;
 }
 
 .control-panel {
@@ -25,7 +25,7 @@
 }
 
 .matches-grid {
-  padding: 5em 0 5em 0;
+  padding: 8em 0 5em 0;
 }
 
 .match-button {
@@ -37,6 +37,64 @@
   padding: 1em;
 }
 
-.viewing {
-  font-size: 2em;
+.boards {
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+  width: 100%;
+  min-height: 20px;
 }
+.player-grid {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.player-name {
+  flex: none;
+  border: 1px dotted grey;
+  /*padding: 5em;*/
+}
+
+/* Guess */
+.guesses {
+  /*float: left;*/
+  flex: auto;
+  display: flex;
+}
+
+.guess {
+  flex: none;
+  display: flex;
+}
+
+/* Feedback */
+
+.key-peg {
+  border: 1px dotted grey;
+  width: 3em;
+}
+
+
+/* Code */
+
+.code {
+  width: 8em;
+}
+
+
+/* Colors */
+
+.red {
+  background: red;
+}
+
+.grey {
+  background: grey;
+}
+
+.white {
+  background: white;
+}
+
+

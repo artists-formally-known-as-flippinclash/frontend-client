@@ -144,15 +144,29 @@
 
   var updateBoards = function(game) {
     var players = game.players
+    var board = ""
 
-    console.log(players);
+    for (i=0; i<players.length; i++){
+      board = board + template();
+    }
 
-    $('.matches-grid').html("hi")
+    $('.matches-grid').html(board)
   }
 
   //////////////////////////////////////////////////////////////////////////////
 
-
+  var template = function() {
+    var board = "<div class='player-window'>" +
+                  "<ul>" +
+                    "<li>" +
+                      "<div>" +
+                        "HI"
+                      "<div>" +
+                    "<li>" +
+                  "</ul>" +
+                "</div>"
+    return board
+  }
 
 
   // ON PAGE LOAD /////////////////////////////////////////////////////////////
@@ -169,7 +183,7 @@
     findMatches(server, function (apiMatches) {
       availabileMatches = apiMatches.data
       var matchesResponse = formatMatchesResponse(apiMatches.data);
-      updateView(".matches-grid", matchesResponse);
+      //updateView(".matches-grid", matchesResponse);
     });
 
     // State 2 & 3
