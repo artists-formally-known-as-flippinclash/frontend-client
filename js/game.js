@@ -187,7 +187,7 @@
       player.updateGuesses(pusherPlayer.guesses);
       var guessIndex = player.guesses.length-1;
       var guess = player.guesses[guessIndex];
-      var guessNo = ".guess-" + guessIndex.toString();
+      var guessNo = ".guess-" + (guessIndex+1).toString();
       var guessSelector = $(playerGrid).find(guessNo);
 
       debugger;
@@ -209,15 +209,14 @@
         var codePeg = ".code-peg-" + p.toString();
         var codePegView = guessSelector.find(codePeg);
         $(codePegView).addClass(playedCodePeg);
+        debugger;
       };
     };
   };
 
   var updatePlayerGuessFeedback = function(game, data){
     //iterate over players
-    debugger;
     for (a=0; a<data.data.players.length; a++){
-      debugger
       var pusherPlayer = data.data.players[a];
       var player = game.getPlayerById(pusherPlayer.id);
       player.updateGuesses(pusherPlayer.guesses);
@@ -226,11 +225,10 @@
       if (player.guesses.length >= 10 && game.winner == "") {
         playerLost(player);
       }
-      debugger;
       var playerGrid =".player-grid-" + a.toString();
       //iterate over player's guesses
       //find guess div
-      for (g=player.guesses.length-1; g>-1; g--){
+      for (g=0; g<player.guesses.length; g++){
         var playedGuess = player.guesses[g];
         var guessNo = ".guess-" + (g+1).toString();
         var feedback = combineFeedback(playedGuess);
@@ -276,9 +274,9 @@
 
       //iterate over player's guesses
       //find guess div
-      for (g=player.guesses.length-1; g>-1; g--){
+      for (g=0; g<player.guesses.length; g++){
         var playedGuess = player.guesses[g];
-        var guessNo = ".guess-" + g.toString();
+        var guessNo = ".guess-" + (g+1).toString();
 
         //iterate over player guesses code-pegs
         //find code peg div
