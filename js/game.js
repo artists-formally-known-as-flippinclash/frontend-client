@@ -184,7 +184,7 @@
       var playerGrid =".player-grid-" + player.order.toString();
 
       debugger;
-      player.updateGuesses(pusherPlayer.guesses.reverse());
+      player.updateGuesses(pusherPlayer.guesses);
       var guessIndex = player.guesses.length-1;
       var guess = player.guesses[guessIndex];
       var guessNo = ".guess-" + (guessIndex).toString();
@@ -219,7 +219,7 @@
     for (a=0; a<data.data.players.length; a++){
       var pusherPlayer = data.data.players[a];
       var player = game.getPlayerById(pusherPlayer.id);
-      player.updateGuesses(pusherPlayer.guesses.reverse());
+      player.updateGuesses(pusherPlayer.guesses);
 
       // if player has 10 guesses but did not guess correctly (no winner determined)
       if (player.guesses.length >= 10 && game.winner == "") {
@@ -269,7 +269,7 @@
     for (a=0; a<data.data.players.length; a++){
       var pusherPlayer = data.data.players[a];
       var player = game.getPlayerById(pusherPlayer.id);
-      player.updateGuesses(pusherPlayer.guesses.reverse());
+      player.updateGuesses(pusherPlayer.guesses);
       var playerGrid =".player-grid-" + a.toString();
 
       //iterate over player's guesses
