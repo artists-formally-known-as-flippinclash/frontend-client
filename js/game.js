@@ -160,12 +160,12 @@
         var pusherPlayer = data.data.players[a];
         var player = game.getPlayerById(pusherPlayer.id);
         player.updateGuesses(pusherPlayer.guesses);
-        var playerGrid =".player-grid-" + a.toString()
+        var playerGrid =".player-grid-" + a.toString();
 
         //iterate over player's guesses
         //find guess div
         for (g=0; g<player.guesses.length; g++){
-          var playedGuess = player.guesses[g];;
+          var playedGuess = player.guesses[g];
           var guessNo = ".guess-" + g.toString();
 
           //iterate over player guesses code-pegs
@@ -205,19 +205,6 @@
   }
 
   //////////////////////////////////////////////////////////////////////////////
-
-  var template = function() {
-    var board = "<div class='player-window'>" +
-                  "<ul>" +
-                    "<li>" +
-                      "<div>" +
-                        "HI"
-                      "<div>" +
-                    "<li>" +
-                  "</ul>" +
-                "</div>"
-    return board
-  }
 
 
   // ON PAGE LOAD /////////////////////////////////////////////////////////////
