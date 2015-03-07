@@ -134,6 +134,7 @@
 
   var eventMatchStarted = function(game) {
     game.channel.bind('match-started', function(){
+      console.log(data);
       console.log('Pusher binded to event: match-started');
     });
   };
@@ -153,6 +154,12 @@
       var player = players[i];
       var playerName = ".player-name-" + i.toString();
       $(playerName).text(player.name);
+      $(playerName).removeClass("no-player");
+      $(playerName).addClass("player-name");
+
+      var playerGrid = ".player-grid-" + i.toString();
+      $(playerGrid).removeClass("player-grid");
+      $(playerGrid).addClass("player-grid-playing");
     }
 
     $(".matches-grid").hide();
