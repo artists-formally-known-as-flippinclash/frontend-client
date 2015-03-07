@@ -101,6 +101,8 @@ li {
   display: flex;
   justify-content: center;
   padding-top: 5em;
+  padding-left: 10%;
+  padding-right: 10%;
   flex-wrap: wrap;
 }
 
@@ -109,6 +111,7 @@ li {
   display: flex;
   padding: 0.5em 0 0.5em 0;
   border-top: 0.1em dotted grey;
+  justify-content: center;
 }
 
 .guess-input {
