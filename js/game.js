@@ -32,7 +32,6 @@
   };
 
   // PARSING
-
   var parseLastMatch = function(matches) {
     return matches.data[matches.data.length-1];
   };
