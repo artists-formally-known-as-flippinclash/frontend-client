@@ -137,7 +137,7 @@
   var eventMatchProgress = function(game) {
     game.channel.bind('match-progress', function(){
       console.log('Pusher binded to event: match-progress');
-    };
+    });
   };
 
   //////////////////////////////////////////////////////////////////////////////
