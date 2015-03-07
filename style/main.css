@@ -55,6 +55,11 @@ li {
   flex: none;
   border: 1px dotted grey;
   height: 1.5em;
+  font-weight: 700;
+}
+
+.no-player {
+  font-weight: 300;
 }
 
 /* Guess */
