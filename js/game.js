@@ -65,6 +65,8 @@
       loadPlayers(match, game);
 
       listenToEvents(game, pusher);
+
+      updateBoards(game);
     });
   };
 
@@ -80,7 +82,7 @@
       var player = playersList[i];
       players.push(new Player(player.id, player.name));
     };
-    game.setPlayers = players;
+    game.setPlayers(players);
   };
 
   function Player(id, name){
@@ -139,6 +141,14 @@
       console.log('Pusher binded to event: match-progress');
     });
   };
+
+  var updateBoards = function(game) {
+    var players = game.players
+
+    console.log(players);
+
+    $('.matches-grid').html("hi")
+  }
 
   //////////////////////////////////////////////////////////////////////////////
 
