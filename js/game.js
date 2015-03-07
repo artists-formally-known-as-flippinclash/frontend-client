@@ -143,12 +143,18 @@
       console.log(data);
       var playerGuesses = data.data.players[0].guesses
       var last_player = playerGuesses[playerGuesses.length-1]
-      debugger;
     });
   };
 
   var updateBoards = function(game) {
     var players = game.players
+
+    for (i=0; i<players.length; i++){
+      var player = players[i];
+      var playerName = ".player-name-" + i.toString();
+      $(playerName).text(player.name);
+    }
+
     $(".matches-grid").hide();
     $(".matches-boards").show();
   }
