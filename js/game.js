@@ -187,7 +187,7 @@
       player.updateGuesses(pusherPlayer.guesses);
       var guessIndex = player.guesses.length-1;
       var guess = player.guesses[guessIndex];
-      var guessNo = ".guess-" + (guessIndex+1).toString();
+      var guessNo = ".guess-" + (guessIndex).toString();
       var guessSelector = $(playerGrid).find(guessNo);
 
       debugger;
@@ -230,7 +230,7 @@
       //find guess div
       for (g=0; g<player.guesses.length; g++){
         var playedGuess = player.guesses[g];
-        var guessNo = ".guess-" + (g+1).toString();
+        var guessNo = ".guess-" + (g).toString();
         var feedback = combineFeedback(playedGuess);
 
         //iterate over available key-peg slots
@@ -276,7 +276,7 @@
       //find guess div
       for (g=0; g<player.guesses.length; g++){
         var playedGuess = player.guesses[g];
-        var guessNo = ".guess-" + (g+1).toString();
+        var guessNo = ".guess-" + (g).toString();
 
         //iterate over player guesses code-pegs
         //find code peg div
