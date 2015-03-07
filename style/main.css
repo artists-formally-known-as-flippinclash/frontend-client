@@ -68,6 +68,7 @@ li {
   flex-direction: column;
   padding: 1em;
   background: #F3F3F3;
+  opacity: 0.4;
 }
 
 .player-grid-playing {
@@ -77,6 +78,7 @@ li {
   border: 0.1em solid grey;
   padding: 1em;
   background: white;
+  color: black;
 }
 
 .player-name {
@@ -84,17 +86,21 @@ li {
   border: 0.1em dotted grey;
   height: 1.5em;
   font-weight: 700;
+  padding: 1em;
 }
 
 .no-player {
   font-weight: 300;
+  color: #BFCAD6;
+  height: 1.5em;
+  padding: 1em;
 }
 
 /* Guess */
 .guesses {
   display: flex;
   justify-content: center;
-  padding-top: 1em;
+  padding-top: 5em;
   flex-wrap: wrap;
 }
 
