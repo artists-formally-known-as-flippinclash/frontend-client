@@ -62,6 +62,9 @@
       loadMatch(match, game);
       loadPlayers(match, game);
 
+      updatePlayerGuessCodePegs(game, match);
+      updatePlayerGuessFeedback(game, match);
+
       listenToEvents(game, pusher);
       updateBoards(game);
     });
