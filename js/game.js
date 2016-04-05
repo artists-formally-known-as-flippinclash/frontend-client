@@ -160,8 +160,8 @@
       debugger;
 
       if (game.match.firstLoad == true) {
-        updatePlayerGuessCodePegs(game, data);
-        updatePlayerGuessFeedback(game, data);
+        updatePlayerGuessCodePegs(game, data.data);
+        updatePlayerGuessFeedback(game, data.data);
         game.match.firstLoadDone();
       } else {
         debugger;
@@ -216,8 +216,8 @@
 
   var updatePlayerGuessFeedback = function(game, data){
     //iterate over players
-    for (a=0; a<data.data.players.length; a++){
-      var pusherPlayer = data.data.players[a];
+    for (a=0; a<data.players.length; a++){
+      var pusherPlayer = data.players[a];
       var player = game.getPlayerById(pusherPlayer.id);
       player.updateGuesses(pusherPlayer.guesses);
 
@@ -266,8 +266,8 @@
 
   var updatePlayerGuessCodePegs = function(game, data) {
     //iterate over player
-    for (a=0; a<data.data.players.length; a++){
-      var pusherPlayer = data.data.players[a];
+    for (a=0; a<data.players.length; a++){
+      var pusherPlayer = data.players[a];
       var player = game.getPlayerById(pusherPlayer.id);
       player.updateGuesses(pusherPlayer.guesses);
       var playerGrid =".player-grid-" + a.toString();
